@@ -40,6 +40,65 @@
       z-index: 9999;
     }
 
+    /* CHILLI RAIN CONTAINER */
+    .chilli-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .chilli {
+      position: absolute;
+      font-size: 24px;
+      user-select: none;
+      animation: fall linear infinite;
+      opacity: 0.7;
+      will-change: transform;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.7;
+      }
+      90% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Respect user motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .chilli {
+        animation: fallReduced linear infinite;
+      }
+      
+      @keyframes fallReduced {
+        0% {
+          transform: translateY(-10vh);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.7;
+        }
+        90% {
+          opacity: 0.7;
+        }
+        100% {
+          transform: translateY(110vh);
+          opacity: 0;
+        }
+      }
+    }
+
     .card {
       width: min(720px, 92vw);
       padding: 26px 22px;
@@ -48,6 +107,8 @@
       border-radius: 22px;
       text-align: center;
       box-shadow: 0 18px 60px rgba(0,0,0,.15);
+      position: relative;
+      z-index: 10;
     }
 
     .art {
@@ -131,6 +192,9 @@
 
 <body>
   <canvas id="confettiCanvas"></canvas>
+  
+  <!-- Chilli rain container -->
+  <div class="chilli-container" aria-hidden="true"></div>
 
   <main class="card">
     <!-- ANIMAL WITH HEART -->
@@ -179,7 +243,7 @@
     </section>
 
     <!-- HINT -->
-    <div class="hint" id="hint">“No” seems a bit shy 😈</div>
+    <div class="hint" id="hint">"No" seems a bit shy 😈</div>
 
     <section class="result" id="result">
       <h2>YAY! 🎉</h2>
@@ -243,6 +307,30 @@
       }, 300);
     }
 
+    /* ---------- CHILLI RAIN ---------- */
+    function createChilliRain() {
+      const container = document.querySelector('.chilli-container');
+      const chilliCount = 15; // Light rain effect
+      const chilliEmojis = ['🌶️', '🌶️', '🌶️']; // Can add '🔥' for variety
+      
+      for (let i = 0; i < chilliCount; i++) {
+        const chilli = document.createElement('div');
+        chilli.className = 'chilli';
+        chilli.textContent = chilliEmojis[Math.floor(Math.random() * chilliEmojis.length)];
+        
+        // Randomize position and timing for natural effect
+        chilli.style.left = Math.random() * 100 + 'vw';
+        chilli.style.animationDuration = (8 + Math.random() * 6) + 's'; // 8-14s fall time
+        chilli.style.animationDelay = Math.random() * 5 + 's'; // Stagger start times
+        chilli.style.fontSize = (20 + Math.random() * 15) + 'px'; // Varied sizes (20-35px)
+        
+        container.appendChild(chilli);
+      }
+    }
+
+    // Initialize chilli rain on page load
+    createChilliRain();
+
     /* ---------- YES BUTTON GROWS ---------- */
     let yesScale = 1;
     function growYes() {
@@ -292,7 +380,7 @@
     /* ---------- YES CLICK ---------- */
     yesBtn.addEventListener("click", () => {
       zone.style.display = "none";
-      hint.style.display = "none";     // HIDE THE HINT
+      hint.style.display = "none";
       result.style.display = "block";
       resizeConfettiCanvas();
       fullScreenConfetti();
@@ -300,5 +388,3 @@
   </script>
 </body>
 </html>
-
-
