@@ -99,6 +99,111 @@
       }
     }
 
+    /* MUSIC CONTROL BUTTON */
+    .music-control {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .music-btn {
+      background: rgba(255, 255, 255, 0.95);
+      border: 2px solid var(--yes);
+      color: var(--yes);
+      padding: 12px 22px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .music-btn:hover {
+      background: var(--yes);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 59, 122, 0.3);
+    }
+
+    .music-btn.playing {
+      background: var(--yes);
+      color: white;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* INITIAL INTERACTION OVERLAY */
+    .interaction-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(3px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      cursor: pointer;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .interaction-overlay.hidden {
+      display: none;
+    }
+
+    .interaction-prompt {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      animation: popIn 0.4s ease;
+    }
+
+    .interaction-prompt h2 {
+      margin: 0 0 15px 0;
+      font-size: 28px;
+      color: var(--yes);
+    }
+
+    .interaction-prompt p {
+      margin: 0 0 20px 0;
+      color: #666;
+      font-size: 16px;
+    }
+
+    .start-btn {
+      background: var(--yes);
+      color: white;
+      border: none;
+      padding: 15px 35px;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(255, 59, 122, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .start-btn:hover {
+      background: var(--yesHover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 59, 122, 0.4);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
     .card {
       width: min(720px, 92vw);
       padding: 26px 22px;
@@ -191,10 +296,33 @@
 </head>
 
 <body>
+  <!-- Interaction overlay for autoplay -->
+  <div class="interaction-overlay" id="interactionOverlay">
+    <div class="interaction-prompt">
+      <h2>💕 Welcome!</h2>
+      <p>Click to start the experience</p>
+      <button class="start-btn" id="startBtn">Enter 🎵</button>
+    </div>
+  </div>
+
   <canvas id="confettiCanvas"></canvas>
   
   <!-- Chilli rain container -->
   <div class="chilli-container" id="chilliContainer"></div>
+
+  <!-- Music control button -->
+  <div class="music-control">
+    <button id="musicToggle" class="music-btn">
+      <span id="musicIcon">🔊</span>
+      <span id="musicText">Pause Music</span>
+    </button>
+  </div>
+
+  <!-- Background music audio element -->
+  <audio id="backgroundMusic" loop preload="auto">
+    <source src="valentine-song.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 
   <main class="card">
     <!-- ANIMAL WITH HEART -->
@@ -264,6 +392,59 @@
       const noBtn = document.getElementById("noBtn");
       const result = document.getElementById("result");
       const hint = document.getElementById("hint");
+      const interactionOverlay = document.getElementById("interactionOverlay");
+      const startBtn = document.getElementById("startBtn");
+
+      /* ---------- MUSIC CONTROL ---------- */
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      const musicToggle = document.getElementById('musicToggle');
+      const musicIcon = document.getElementById('musicIcon');
+      const musicText = document.getElementById('musicText');
+      
+      let isPlaying = false;
+
+      // Set volume to a comfortable level (70%)
+      backgroundMusic.volume = 0.7;
+
+      // Function to start music
+      function startMusic() {
+        backgroundMusic.play().then(() => {
+          isPlaying = true;
+          musicIcon.textContent = '🔊';
+          musicText.textContent = 'Pause Music';
+          musicToggle.classList.add('playing');
+          console.log('Music started successfully');
+        }).catch(err => {
+          console.log('Playback failed:', err);
+        });
+      }
+
+      // Start button click - removes overlay and starts music
+      startBtn.addEventListener('click', () => {
+        interactionOverlay.classList.add('hidden');
+        startMusic();
+      });
+
+      // Also allow clicking anywhere on overlay
+      interactionOverlay.addEventListener('click', (e) => {
+        if (e.target === interactionOverlay) {
+          interactionOverlay.classList.add('hidden');
+          startMusic();
+        }
+      });
+
+      // Music toggle button
+      musicToggle.addEventListener('click', () => {
+        if (isPlaying) {
+          backgroundMusic.pause();
+          isPlaying = false;
+          musicIcon.textContent = '🎵';
+          musicText.textContent = 'Play Music';
+          musicToggle.classList.remove('playing');
+        } else {
+          startMusic();
+        }
+      });
 
       /* ---------- CONFETTI ---------- */
       const confettiCanvas = document.getElementById("confettiCanvas");
@@ -394,6 +575,11 @@
         result.style.display = "block";
         resizeConfettiCanvas();
         fullScreenConfetti();
+        
+        // Ensure music is playing
+        if (!isPlaying) {
+          startMusic();
+        }
       });
       
     }); // End DOMContentLoaded
