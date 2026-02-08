@@ -252,13 +252,14 @@
       box-shadow: 0 10px 24px rgba(0,0,0,.14);
       user-select: none;
       -webkit-tap-highlight-color: transparent;
-      transition: transform .12s ease, background .12s ease;
+      transition: background .12s ease;
     }
 
     #yesBtn {
       left: 18%;
       background: var(--yes);
       color: #fff;
+      transition: transform 0.3s ease, background .12s ease;
     }
     #yesBtn:hover { background: var(--yesHover); }
 
@@ -328,7 +329,7 @@
   </audio>
 
   <main class="card">
-    <!-- ANIMAL WITH HEART (FIXED) -->
+    <!-- ANIMAL WITH HEART -->
     <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="fur" x1="0" x2="1">
@@ -418,4 +419,230 @@
       const interactionOverlay = document.getElementById("interactionOverlay");
       const startBtn = document.getElementById("startBtn");
 
-      /* ---------- MUSIC CONTROL ------
+      /* ---------- MUSIC CONTROL ---------- */
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      const musicToggle = document.getElementById('musicToggle');
+      const musicIcon = document.getElementById('musicIcon');
+      const musicText = document.getElementById('musicText');
+      
+      let isPlaying = false;
+
+      // Set volume to a comfortable level (70%)
+      backgroundMusic.volume = 0.7;
+
+      // Function to start music
+      function startMusic() {
+        backgroundMusic.play().then(() => {
+          isPlaying = true;
+          musicIcon.textContent = '🔊';
+          musicText.textContent = 'Pause Music';
+          musicToggle.classList.add('playing');
+          console.log('Music started successfully');
+        }).catch(err => {
+          console.log('Playback failed:', err);
+        });
+      }
+
+      // Start button click - removes overlay and starts music
+      startBtn.addEventListener('click', () => {
+        interactionOverlay.classList.add('hidden');
+        startMusic();
+      });
+
+      // Also allow clicking anywhere on overlay
+      interactionOverlay.addEventListener('click', (e) => {
+        if (e.target === interactionOverlay) {
+          interactionOverlay.classList.add('hidden');
+          startMusic();
+        }
+      });
+
+      // Music toggle button
+      musicToggle.addEventListener('click', () => {
+        if (isPlaying) {
+          backgroundMusic.pause();
+          isPlaying = false;
+          musicIcon.textContent = '🎵';
+          musicText.textContent = 'Play Music';
+          musicToggle.classList.remove('playing');
+        } else {
+          startMusic();
+        }
+      });
+
+      /* ---------- CONFETTI ---------- */
+      const confettiCanvas = document.getElementById("confettiCanvas");
+
+      function resizeConfettiCanvas() {
+        const dpr = Math.max(1, window.devicePixelRatio || 1);
+        confettiCanvas.width = Math.floor(window.innerWidth * dpr);
+        confettiCanvas.height = Math.floor(window.innerHeight * dpr);
+        confettiCanvas.style.width = "100vw";
+        confettiCanvas.style.height = "100vh";
+      }
+
+      resizeConfettiCanvas();
+      window.addEventListener("resize", resizeConfettiCanvas);
+      window.addEventListener("orientationchange", () => setTimeout(resizeConfettiCanvas, 150));
+
+      const confettiInstance = confetti.create(confettiCanvas, {
+        resize: false,
+        useWorker: true
+      });
+
+      function fullScreenConfetti() {
+        const end = Date.now() + 1600;
+
+        (function frame() {
+          confettiInstance({
+            particleCount: 12,
+            spread: 90,
+            startVelocity: 45,
+            ticks: 180,
+            origin: { x: Math.random(), y: Math.random() * 0.3 }
+          });
+          if (Date.now() < end) requestAnimationFrame(frame);
+        })();
+
+        setTimeout(() => {
+          confettiInstance({
+            particleCount: 300,
+            spread: 140,
+            startVelocity: 60,
+            ticks: 220,
+            origin: { x: 0.5, y: 0.55 }
+          });
+        }, 300);
+      }
+
+      /* ---------- CHILLI RAIN ---------- */
+      function createChilliRain() {
+        const container = document.getElementById('chilliContainer');
+        
+        if (!container) {
+          console.error('Chilli container not found!');
+          return;
+        }
+        
+        const chilliCount = 12;
+        
+        for (let i = 0; i < chilliCount; i++) {
+          const chilli = document.createElement('div');
+          chilli.className = 'chilli';
+          chilli.textContent = '🌶️';
+          
+          // Randomize position and timing
+          chilli.style.left = Math.random() * 100 + 'vw';
+          chilli.style.animationDuration = (10 + Math.random() * 8) + 's';
+          chilli.style.animationDelay = Math.random() * 6 + 's';
+          chilli.style.fontSize = (28 + Math.random() * 20) + 'px';
+          
+          container.appendChild(chilli);
+        }
+        
+        console.log('Chilli rain initialized with', chilliCount, 'chillies');
+      }
+
+      // Initialize chilli rain
+      createChilliRain();
+
+      /* ---------- YES BUTTON GROWS GRADUALLY ---------- */
+      let yesScale = 1;
+      let growthInterval;
+      
+      function startYesGrowth() {
+        // Clear any existing interval
+        if (growthInterval) {
+          clearInterval(growthInterval);
+        }
+        
+        // Grow the Yes button slowly every 100ms
+        growthInterval = setInterval(() => {
+          if (yesScale < 2.5) {
+            yesScale += 0.02; // Slow, gradual growth
+            yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
+          }
+        }, 100);
+      }
+      
+      // Start growing when the page loads (after overlay is dismissed)
+      startBtn.addEventListener('click', () => {
+        setTimeout(() => {
+          startYesGrowth();
+        }, 500);
+      });
+      
+      interactionOverlay.addEventListener('click', (e) => {
+        if (e.target === interactionOverlay) {
+          setTimeout(() => {
+            startYesGrowth();
+          }, 500);
+        }
+      });
+
+      /* ---------- NO BUTTON RUNS AWAY ---------- */
+      function clamp(n, min, max) {
+        return Math.max(min, Math.min(max, n));
+      }
+
+      function moveNo(px, py) {
+        const z = zone.getBoundingClientRect();
+        const b = noBtn.getBoundingClientRect();
+
+        let dx = (b.left + b.width / 2) - px;
+        let dy = (b.top + b.height / 2) - py;
+        let mag = Math.hypot(dx, dy) || 1;
+        dx /= mag;
+        dy /= mag;
+
+        let newLeft = (b.left - z.left) + dx * 150;
+        let newTop  = (b.top - z.top) + dy * 150;
+
+        newLeft = clamp(newLeft, 0, z.width - b.width);
+        newTop  = clamp(newTop, 0, z.height - b.height);
+
+        noBtn.style.left = newLeft + "px";
+        noBtn.style.top = newTop + "px";
+        noBtn.style.transform = "none";
+        
+        // Accelerate Yes button growth when No is avoided
+        if (yesScale < 2.5) {
+          yesScale += 0.05;
+          yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
+        }
+      }
+
+      zone.addEventListener("pointermove", e => {
+        const b = noBtn.getBoundingClientRect();
+        const d = Math.hypot(
+          (b.left + b.width / 2) - e.clientX,
+          (b.top + b.height / 2) - e.clientY
+        );
+        if (d < 140) moveNo(e.clientX, e.clientY);
+      });
+
+      noBtn.addEventListener("click", e => e.preventDefault());
+
+      /* ---------- YES CLICK ---------- */
+      yesBtn.addEventListener('click', () => {
+        // Stop the growth animation
+        if (growthInterval) {
+          clearInterval(growthInterval);
+        }
+        
+        zone.style.display = "none";
+        hint.style.display = "none";
+        result.style.display = "block";
+        resizeConfettiCanvas();
+        fullScreenConfetti();
+        
+        // Ensure music is playing
+        if (!isPlaying) {
+          startMusic();
+        }
+      });
+      
+    }); // End DOMContentLoaded
+  </script>
+</body>
+</html>
