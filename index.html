@@ -333,54 +333,105 @@
   <main class="card">
     <!-- FIXED CUTE BEAR WITH BOW -->
     <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="fur" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stop-color="#f5b894"/>
-          <stop offset="100%" stop-color="#e89a6f"/>
-        </linearGradient>
-        <linearGradient id="bow" x1="0" x2="1">
-          <stop offset="0%" stop-color="#ff5a8c"/>
-          <stop offset="100%" stop-color="#ff3370"/>
-        </linearGradient>
-        <radialGradient id="earInner">
-          <stop offset="0%" stop-color="#ffd4b8"/>
-          <stop offset="100%" stop-color="#f5b894"/>
-        </radialGradient>
-      </defs>
+  <defs>
+    <linearGradient id="fur" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f5b894"/>
+      <stop offset="100%" stop-color="#e89a6f"/>
+    </linearGradient>
+    <linearGradient id="bow" x1="0" x2="1">
+      <stop offset="0%" stop-color="#ff5a8c"/>
+      <stop offset="100%" stop-color="#ff3370"/>
+    </linearGradient>
+    <radialGradient id="earInner">
+      <stop offset="0%" stop-color="#ffd4b8"/>
+      <stop offset="100%" stop-color="#f5b894"/>
+    </radialGradient>
+  </defs>
 
-      <circle cx="160" cy="130" r="70" fill="url(#fur)"/>
-      <circle cx="115" cy="80" r="32" fill="url(#fur)"/>
-      <circle cx="115" cy="85" r="18" fill="url(#earInner)"/>
-      <circle cx="205" cy="80" r="32" fill="url(#fur)"/>
-      <circle cx="205" cy="85" r="18" fill="url(#earInner)"/>
-      
-      <g transform="translate(205, 65)">
-        <ellipse cx="-20" cy="0" rx="18" ry="14" fill="url(#bow)"/>
-        <ellipse cx="20" cy="0" rx="18" ry="14" fill="url(#bow)"/>
-        <circle cx="0" cy="0" r="8" fill="#ff1f5a"/>
-        <path d="M 0 8 L -5 18 L 0 16 Z" fill="url(#bow)"/>
-        <path d="M 0 8 L 5 18 L 0 16 Z" fill="url(#bow)"/>
-      </g>
-      
-      <g>
-        <circle cx="140" cy="125" r="8" fill="#000"/>
-        <circle cx="143" cy="122" r="3" fill="#fff"/>
-        <circle cx="180" cy="125" r="8" fill="#000"/>
-        <circle cx="183" cy="122" r="3" fill="#fff"/>
-      </g>
-      
-      <ellipse cx="120" cy="140" rx="15" ry="10" fill="#ffb3c6" opacity="0.5"/>
-      <ellipse cx="200" cy="140" rx="15" ry="10" fill="#ffb3c6" opacity="0.5"/>
-      <ellipse cx="160" cy="145" rx="6" ry="5" fill="#000"/>
-      
-      <path d="M 160 148 Q 150 158 140 155" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-      <path d="M 160 148 Q 170 158 180 155" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-      
-      <g opacity="0.9">
-        <path d="M 250 60 C 250 48 258 42 265 42 C 272 42 280 48 280 60 C 280 75 265 85 265 90 C 265 85 250 75 250 60 Z" fill="#ff4d7d"/>
-        <path d="M 225 45 C 225 38 229 34 233 34 C 237 34 241 38 241 45 C 241 54 233 59 233 62 C 233 59 225 54 225 45 Z" fill="#ff7aa2"/>
-      </g>
-    </svg>
+  <!-- Main head circle -->
+  <circle cx="160" cy="130" r="70" fill="url(#fur)"/>
+  
+  <!-- Left ear -->
+  <circle cx="115" cy="80" r="32" fill="url(#fur)"/>
+  <circle cx="115" cy="85" r="18" fill="url(#earInner)"/>
+  
+  <!-- Right ear (with bow) -->
+  <circle cx="205" cy="80" r="32" fill="url(#fur)"/>
+  <circle cx="205" cy="85" r="18" fill="url(#earInner)"/>
+  
+  <!-- Bow on right ear - improved and larger -->
+  <g transform="translate(205, 62)">
+    <!-- Left bow loop -->
+    <ellipse cx="-22" cy="0" rx="20" ry="16" fill="url(#bow)"/>
+    <!-- Right bow loop -->
+    <ellipse cx="22" cy="0" rx="20" ry="16" fill="url(#bow)"/>
+    <!-- Center knot -->
+    <circle cx="0" cy="0" r="9" fill="#ff1f5a"/>
+    <!-- Bow ribbons - made more visible -->
+    <path d="M -3 9 L -8 22 L -1 18 Z" fill="url(#bow)"/>
+    <path d="M 3 9 L 8 22 L 1 18 Z" fill="url(#bow)"/>
+  </g>
+  
+  <!-- Eyes -->
+  <g>
+    <!-- Left eye -->
+    <circle cx="140" cy="125" r="9" fill="#000"/>
+    <circle cx="143" cy="122" r="3.5" fill="#fff"/>
+    
+    <!-- Right eye -->
+    <circle cx="180" cy="125" r="9" fill="#000"/>
+    <circle cx="183" cy="122" r="3.5" fill="#fff"/>
+  </g>
+  
+  <!-- Blush cheeks -->
+  <ellipse cx="118" cy="142" rx="16" ry="11" fill="#ffb3c6" opacity="0.5"/>
+  <ellipse cx="202" cy="142" rx="16" ry="11" fill="#ffb3c6" opacity="0.5"/>
+  
+  <!-- Nose -->
+  <ellipse cx="160" cy="148" rx="7" ry="6" fill="#000"/>
+  
+  <!-- Mouth - improved cute smile -->
+  <path d="M 145 155 Q 152 163 160 164" 
+        stroke="#000" 
+        stroke-width="3" 
+        fill="none" 
+        stroke-linecap="round"/>
+  <path d="M 160 164 Q 168 163 175 155" 
+        stroke="#000" 
+        stroke-width="3" 
+        fill="none" 
+        stroke-linecap="round"/>
+  
+  <!-- Small tongue for extra cuteness (optional) -->
+  <ellipse cx="160" cy="164" rx="4" ry="3" fill="#ff9999" opacity="0.7"/>
+  
+  <!-- Floating hearts above - repositioned -->
+  <g opacity="0.9">
+    <!-- Large heart -->
+    <path d="M 245 55 
+             C 245 43 253 37 260 37 
+             C 267 37 275 43 275 55 
+             C 275 70 260 80 260 85
+             C 260 80 245 70 245 55 Z" 
+          fill="#ff4d7d"/>
+    
+    <!-- Medium heart -->
+    <path d="M 220 40 
+             C 220 32 225 27 230 27 
+             C 235 27 240 32 240 40 
+             C 240 50 230 56 230 60
+             C 230 56 220 50 220 40 Z" 
+          fill="#ff7aa2"/>
+    
+    <!-- Small heart -->
+    <path d="M 270 35 
+             C 270 30 273 27 276 27 
+             C 279 27 282 30 282 35 
+             C 282 41 276 45 276 47
+             C 276 45 270 41 270 35 Z" 
+          fill="#ffb3d9"/>
+  </g>
+</svg>
 
     <h1>Ananya will you be my Valentine?</h1>
 
