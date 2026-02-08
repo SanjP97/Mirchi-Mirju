@@ -286,10 +286,12 @@
       margin: 10px 0;
     }
 
-    .fireworks {
-      width: min(380px, 90vw);
-      margin: 0 auto;
+    .celebration-gif {
+      width: min(450px, 90vw);
+      margin: 20px auto;
       display: block;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
 
     @keyframes pop {
@@ -346,77 +348,37 @@
         </radialGradient>
       </defs>
 
-      <!-- Main head circle -->
       <circle cx="160" cy="130" r="70" fill="url(#fur)"/>
-      
-      <!-- Left ear -->
       <circle cx="115" cy="80" r="32" fill="url(#fur)"/>
       <circle cx="115" cy="85" r="18" fill="url(#earInner)"/>
-      
-      <!-- Right ear (with bow) -->
       <circle cx="205" cy="80" r="32" fill="url(#fur)"/>
       <circle cx="205" cy="85" r="18" fill="url(#earInner)"/>
       
-      <!-- Bow on right ear -->
       <g transform="translate(205, 65)">
-        <!-- Left bow loop -->
         <ellipse cx="-20" cy="0" rx="18" ry="14" fill="url(#bow)"/>
-        <!-- Right bow loop -->
         <ellipse cx="20" cy="0" rx="18" ry="14" fill="url(#bow)"/>
-        <!-- Center knot -->
         <circle cx="0" cy="0" r="8" fill="#ff1f5a"/>
-        <!-- Bow ribbons -->
         <path d="M 0 8 L -5 18 L 0 16 Z" fill="url(#bow)"/>
         <path d="M 0 8 L 5 18 L 0 16 Z" fill="url(#bow)"/>
       </g>
       
-      <!-- Eyes -->
       <g>
-        <!-- Left eye -->
         <circle cx="140" cy="125" r="8" fill="#000"/>
         <circle cx="143" cy="122" r="3" fill="#fff"/>
-        
-        <!-- Right eye -->
         <circle cx="180" cy="125" r="8" fill="#000"/>
         <circle cx="183" cy="122" r="3" fill="#fff"/>
       </g>
       
-      <!-- Blush cheeks -->
       <ellipse cx="120" cy="140" rx="15" ry="10" fill="#ffb3c6" opacity="0.5"/>
       <ellipse cx="200" cy="140" rx="15" ry="10" fill="#ffb3c6" opacity="0.5"/>
-      
-      <!-- Nose -->
       <ellipse cx="160" cy="145" rx="6" ry="5" fill="#000"/>
       
-      <!-- Mouth - cute smile -->
-      <path d="M 160 148 Q 150 158 140 155" 
-            stroke="#000" 
-            stroke-width="2.5" 
-            fill="none" 
-            stroke-linecap="round"/>
-      <path d="M 160 148 Q 170 158 180 155" 
-            stroke="#000" 
-            stroke-width="2.5" 
-            fill="none" 
-            stroke-linecap="round"/>
+      <path d="M 160 148 Q 150 158 140 155" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M 160 148 Q 170 158 180 155" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
       
-      <!-- Floating hearts above -->
       <g opacity="0.9">
-        <!-- Large heart -->
-        <path d="M 250 60 
-                 C 250 48 258 42 265 42 
-                 C 272 42 280 48 280 60 
-                 C 280 75 265 85 265 90
-                 C 265 85 250 75 250 60 Z" 
-              fill="#ff4d7d"/>
-        
-        <!-- Small heart -->
-        <path d="M 225 45 
-                 C 225 38 229 34 233 34 
-                 C 237 34 241 38 241 45 
-                 C 241 54 233 59 233 62
-                 C 233 59 225 54 225 45 Z" 
-              fill="#ff7aa2"/>
+        <path d="M 250 60 C 250 48 258 42 265 42 C 272 42 280 48 280 60 C 280 75 265 85 265 90 C 265 85 250 75 250 60 Z" fill="#ff4d7d"/>
+        <path d="M 225 45 C 225 38 229 34 233 34 C 237 34 241 38 241 45 C 241 54 233 59 233 62 C 233 59 225 54 225 45 Z" fill="#ff7aa2"/>
       </g>
     </svg>
 
@@ -427,21 +389,21 @@
       <button id="noBtn">No</button>
     </section>
 
-    <!-- HINT -->
     <div class="hint" id="hint">"No" seems a bit shy 😈</div>
 
     <section class="result" id="result">
       <h2>YAY! 🎉</h2>
-      <img
-        class="fireworks"
-        src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzl5d3BkMXhhZWp6Zm43M2Jqb3NpbW0xa3k4bjVzZDJwejY4M3NuYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jEEsT1zDB04GQi8VkB/giphy.gif"
-        alt="Fireworks"
+      
+      <!-- Cole Palmer Cold GIF -->
+      <img 
+        class="celebration-gif"
+        src="https://media1.tenor.com/m/54E7MfuxCeUAAAAd/cole-palmer-cold-palmer.gif"
+        alt="Cole Palmer Cold Celebration"
       />
     </section>
   </main>
 
   <script>
-    // Wait for DOM to be fully loaded
     document.addEventListener('DOMContentLoaded', function() {
       
       const zone = document.getElementById("zone");
@@ -459,11 +421,8 @@
       const musicText = document.getElementById('musicText');
       
       let isPlaying = false;
-
-      // Set volume to a comfortable level (70%)
       backgroundMusic.volume = 0.7;
 
-      // Function to start music
       function startMusic() {
         backgroundMusic.play().then(() => {
           isPlaying = true;
@@ -476,13 +435,11 @@
         });
       }
 
-      // Start button click - removes overlay and starts music
       startBtn.addEventListener('click', () => {
         interactionOverlay.classList.add('hidden');
         startMusic();
       });
 
-      // Also allow clicking anywhere on overlay
       interactionOverlay.addEventListener('click', (e) => {
         if (e.target === interactionOverlay) {
           interactionOverlay.classList.add('hidden');
@@ -490,7 +447,6 @@
         }
       });
 
-      // Music toggle button
       musicToggle.addEventListener('click', () => {
         if (isPlaying) {
           backgroundMusic.pause();
@@ -564,7 +520,6 @@
           chilli.className = 'chilli';
           chilli.textContent = '🌶️';
           
-          // Randomize position and timing
           chilli.style.left = Math.random() * 100 + 'vw';
           chilli.style.animationDuration = (10 + Math.random() * 8) + 's';
           chilli.style.animationDelay = Math.random() * 6 + 's';
@@ -576,7 +531,6 @@
         console.log('Chilli rain initialized with', chilliCount, 'chillies');
       }
 
-      // Initialize chilli rain
       createChilliRain();
 
       /* ---------- YES BUTTON GROWS GRADUALLY ---------- */
@@ -584,21 +538,18 @@
       let growthInterval;
       
       function startYesGrowth() {
-        // Clear any existing interval
         if (growthInterval) {
           clearInterval(growthInterval);
         }
         
-        // Grow the Yes button slowly every 100ms
         growthInterval = setInterval(() => {
           if (yesScale < 2.5) {
-            yesScale += 0.02; // Slow, gradual growth
+            yesScale += 0.02;
             yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
           }
         }, 100);
       }
       
-      // Start growing when the page loads (after overlay is dismissed)
       startBtn.addEventListener('click', () => {
         setTimeout(() => {
           startYesGrowth();
@@ -638,7 +589,6 @@
         noBtn.style.top = newTop + "px";
         noBtn.style.transform = "none";
         
-        // Accelerate Yes button growth when No is avoided
         if (yesScale < 2.5) {
           yesScale += 0.05;
           yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
@@ -658,7 +608,6 @@
 
       /* ---------- YES CLICK ---------- */
       yesBtn.addEventListener('click', () => {
-        // Stop the growth animation
         if (growthInterval) {
           clearInterval(growthInterval);
         }
@@ -669,13 +618,12 @@
         resizeConfettiCanvas();
         fullScreenConfetti();
         
-        // Ensure music is playing
         if (!isPlaying) {
           startMusic();
         }
       });
       
-    }); // End DOMContentLoaded
+    });
   </script>
 </body>
 </html>
