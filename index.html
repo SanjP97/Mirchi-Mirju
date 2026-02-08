@@ -329,65 +329,98 @@
   </audio>
 
   <main class="card">
-    <!-- ANIMAL WITH HEART -->
+    <!-- FIXED CUTE BEAR WITH BOW -->
     <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="fur" x1="0" x2="1">
-          <stop offset="0" stop-color="#f7c7a1"/>
-          <stop offset="1" stop-color="#f2a97b"/>
-        </linearGradient>
-        <linearGradient id="heart" x1="0" x2="1">
-          <stop offset="0" stop-color="#ff4d7d"/>
-          <stop offset="1" stop-color="#ff1f68"/>
+        <linearGradient id="fur" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#f5b894"/>
+          <stop offset="100%" stop-color="#e89a6f"/>
         </linearGradient>
         <linearGradient id="bow" x1="0" x2="1">
-          <stop offset="0" stop-color="#ff4d94"/>
-          <stop offset="1" stop-color="#ff1f68"/>
+          <stop offset="0%" stop-color="#ff5a8c"/>
+          <stop offset="100%" stop-color="#ff3370"/>
         </linearGradient>
+        <radialGradient id="earInner">
+          <stop offset="0%" stop-color="#ffd4b8"/>
+          <stop offset="100%" stop-color="#f5b894"/>
+        </radialGradient>
       </defs>
 
-      <!-- Heart floating above -->
-      <path d="M250 50 C250 33 270 25 282 38
-               C294 25 314 33 314 50
-               C314 78 282 92 282 106
-               C282 92 250 78 250 50Z"
-            fill="url(#heart)"/>
-
-      <!-- Main body (bear/cat) -->
-      <ellipse cx="190" cy="140" rx="85" ry="75" fill="url(#fur)"/>
-
+      <!-- Main head circle -->
+      <circle cx="160" cy="130" r="70" fill="url(#fur)"/>
+      
       <!-- Left ear -->
-      <ellipse cx="140" cy="90" rx="30" ry="35" fill="#f2a97b"/>
-      <ellipse cx="140" cy="95" rx="18" ry="20" fill="#f7d4b8"/>
-
-      <!-- Right ear with bow -->
-      <ellipse cx="240" cy="90" rx="30" ry="35" fill="#f2a97b"/>
-      <ellipse cx="240" cy="95" rx="18" ry="20" fill="#f7d4b8"/>
-
+      <circle cx="115" cy="80" r="32" fill="url(#fur)"/>
+      <circle cx="115" cy="85" r="18" fill="url(#earInner)"/>
+      
+      <!-- Right ear (with bow) -->
+      <circle cx="205" cy="80" r="32" fill="url(#fur)"/>
+      <circle cx="205" cy="85" r="18" fill="url(#earInner)"/>
+      
       <!-- Bow on right ear -->
-      <ellipse cx="225" cy="75" rx="20" ry="15" fill="url(#bow)"/>
-      <ellipse cx="255" cy="75" rx="20" ry="15" fill="url(#bow)"/>
-      <circle cx="240" cy="75" r="8" fill="#ff1f68"/>
-
+      <g transform="translate(205, 65)">
+        <!-- Left bow loop -->
+        <ellipse cx="-20" cy="0" rx="18" ry="14" fill="url(#bow)"/>
+        <!-- Right bow loop -->
+        <ellipse cx="20" cy="0" rx="18" ry="14" fill="url(#bow)"/>
+        <!-- Center knot -->
+        <circle cx="0" cy="0" r="8" fill="#ff1f5a"/>
+        <!-- Bow ribbons -->
+        <path d="M 0 8 L -5 18 L 0 16 Z" fill="url(#bow)"/>
+        <path d="M 0 8 L 5 18 L 0 16 Z" fill="url(#bow)"/>
+      </g>
+      
       <!-- Eyes -->
-      <circle cx="165" cy="135" r="10" fill="#000"/>
-      <circle cx="168" cy="132" r="3" fill="#fff"/>
-      <circle cx="215" cy="135" r="10" fill="#000"/>
-      <circle cx="218" cy="132" r="3" fill="#fff"/>
-
+      <g>
+        <!-- Left eye -->
+        <circle cx="140" cy="125" r="8" fill="#000"/>
+        <circle cx="143" cy="122" r="3" fill="#fff"/>
+        
+        <!-- Right eye -->
+        <circle cx="180" cy="125" r="8" fill="#000"/>
+        <circle cx="183" cy="122" r="3" fill="#fff"/>
+      </g>
+      
+      <!-- Blush cheeks -->
+      <ellipse cx="120" cy="140" rx="15" ry="10" fill="#ffb3c6" opacity="0.5"/>
+      <ellipse cx="200" cy="140" rx="15" ry="10" fill="#ffb3c6" opacity="0.5"/>
+      
       <!-- Nose -->
-      <ellipse cx="190" cy="155" rx="8" ry="6" fill="#000"/>
-
-      <!-- Mouth -->
-      <path d="M190 158 Q180 168 170 165" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <path d="M190 158 Q200 168 210 165" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
-
-      <!-- Blush marks -->
-      <ellipse cx="145" cy="150" rx="15" ry="10" fill="#ffb3c6" opacity="0.6"/>
-      <ellipse cx="235" cy="150" rx="15" ry="10" fill="#ffb3c6" opacity="0.6"/>
+      <ellipse cx="160" cy="145" rx="6" ry="5" fill="#000"/>
+      
+      <!-- Mouth - cute smile -->
+      <path d="M 160 148 Q 150 158 140 155" 
+            stroke="#000" 
+            stroke-width="2.5" 
+            fill="none" 
+            stroke-linecap="round"/>
+      <path d="M 160 148 Q 170 158 180 155" 
+            stroke="#000" 
+            stroke-width="2.5" 
+            fill="none" 
+            stroke-linecap="round"/>
+      
+      <!-- Floating hearts above -->
+      <g opacity="0.9">
+        <!-- Large heart -->
+        <path d="M 250 60 
+                 C 250 48 258 42 265 42 
+                 C 272 42 280 48 280 60 
+                 C 280 75 265 85 265 90
+                 C 265 85 250 75 250 60 Z" 
+              fill="#ff4d7d"/>
+        
+        <!-- Small heart -->
+        <path d="M 225 45 
+                 C 225 38 229 34 233 34 
+                 C 237 34 241 38 241 45 
+                 C 241 54 233 59 233 62
+                 C 233 59 225 54 225 45 Z" 
+              fill="#ff7aa2"/>
+      </g>
     </svg>
 
-    <h1>Ananya will you be my valentine?</h1>
+    <h1>Ananya will you be my Valentine?</h1>
 
     <section class="button-zone" id="zone">
       <button id="yesBtn">Yes</button>
@@ -401,7 +434,7 @@
       <h2>YAY! 🎉</h2>
       <img
         class="fireworks"
-        src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
+        src="https://tenor.com/t2sqRXNVBXd.gif"
         alt="Fireworks"
       />
     </section>
