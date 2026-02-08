@@ -51,10 +51,10 @@
 
     .chilli {
       position: absolute;
-      font-size: 24px;
+      font-size: 32px;
       user-select: none;
       animation: fall linear infinite;
-      opacity: 0.7;
+      opacity: 0.6;
       will-change: transform;
     }
 
@@ -64,10 +64,10 @@
         opacity: 0;
       }
       10% {
-        opacity: 0.7;
+        opacity: 0.6;
       }
       90% {
-        opacity: 0.7;
+        opacity: 0.6;
       }
       100% {
         transform: translateY(110vh) rotate(360deg);
@@ -87,10 +87,10 @@
           opacity: 0;
         }
         10% {
-          opacity: 0.7;
+          opacity: 0.6;
         }
         90% {
-          opacity: 0.7;
+          opacity: 0.6;
         }
         100% {
           transform: translateY(110vh);
@@ -145,8 +145,8 @@
     .interaction-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(3px);
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(5px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -161,32 +161,35 @@
 
     .interaction-prompt {
       background: white;
-      padding: 30px 40px;
-      border-radius: 20px;
+      padding: 40px 50px;
+      border-radius: 25px;
       text-align: center;
       box-shadow: 0 20px 60px rgba(0,0,0,0.3);
       animation: popIn 0.4s ease;
+      max-width: 400px;
     }
 
     .interaction-prompt h2 {
-      margin: 0 0 15px 0;
-      font-size: 28px;
+      margin: 0 0 20px 0;
+      font-size: 36px;
       color: var(--yes);
+      line-height: 1.2;
     }
 
     .interaction-prompt p {
-      margin: 0 0 20px 0;
+      margin: 0 0 30px 0;
       color: #666;
-      font-size: 16px;
+      font-size: 18px;
+      line-height: 1.5;
     }
 
     .start-btn {
       background: var(--yes);
       color: white;
       border: none;
-      padding: 15px 35px;
+      padding: 16px 40px;
       border-radius: 50px;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 700;
       cursor: pointer;
       box-shadow: 0 6px 20px rgba(255, 59, 122, 0.3);
@@ -300,8 +303,8 @@
   <div class="interaction-overlay" id="interactionOverlay">
     <div class="interaction-prompt">
       <h2>💕 Welcome!</h2>
-      <p>Click to start the experience</p>
-      <button class="start-btn" id="startBtn">Enter 🎵</button>
+      <p>Click to start the experience with music</p>
+      <button class="start-btn" id="startBtn">Enter</button>
     </div>
   </div>
 
@@ -325,7 +328,7 @@
   </audio>
 
   <main class="card">
-    <!-- ANIMAL WITH HEART -->
+    <!-- ANIMAL WITH HEART (FIXED) -->
     <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="fur" x1="0" x2="1">
@@ -336,31 +339,51 @@
           <stop offset="0" stop-color="#ff4d7d"/>
           <stop offset="1" stop-color="#ff1f68"/>
         </linearGradient>
+        <linearGradient id="bow" x1="0" x2="1">
+          <stop offset="0" stop-color="#ff4d94"/>
+          <stop offset="1" stop-color="#ff1f68"/>
+        </linearGradient>
       </defs>
 
+      <!-- Heart floating above -->
       <path d="M250 50 C250 33 270 25 282 38
                C294 25 314 33 314 50
                C314 78 282 92 282 106
                C282 92 250 78 250 50Z"
             fill="url(#heart)"/>
 
-      <path d="M90 120 C90 70 140 40 190 60
-               C240 40 290 70 290 120
-               C290 180 240 210 190 210
-               C140 210 90 180 90 120Z"
-            fill="url(#fur)"/>
+      <!-- Main body (bear/cat) -->
+      <ellipse cx="190" cy="140" rx="85" ry="75" fill="url(#fur)"/>
 
-      <path d="M110 92 L95 55 L140 78 Z" fill="#f2a97b"/>
-      <path d="M270 92 L285 55 L240 78 Z" fill="#f2a97b"/>
+      <!-- Left ear -->
+      <ellipse cx="140" cy="90" rx="30" ry="35" fill="#f2a97b"/>
+      <ellipse cx="140" cy="95" rx="18" ry="20" fill="#f7d4b8"/>
 
-      <circle cx="160" cy="130" r="8"/>
-      <circle cx="220" cy="130" r="8"/>
+      <!-- Right ear with bow -->
+      <ellipse cx="240" cy="90" rx="30" ry="35" fill="#f2a97b"/>
+      <ellipse cx="240" cy="95" rx="18" ry="20" fill="#f7d4b8"/>
 
-      <path d="M190 144 C186 144 182 148 182 152
-               C182 160 190 164 190 170
-               C190 164 198 160 198 152
-               C198 148 194 144 190 144Z"
-            fill="#ff7aa2"/>
+      <!-- Bow on right ear -->
+      <ellipse cx="225" cy="75" rx="20" ry="15" fill="url(#bow)"/>
+      <ellipse cx="255" cy="75" rx="20" ry="15" fill="url(#bow)"/>
+      <circle cx="240" cy="75" r="8" fill="#ff1f68"/>
+
+      <!-- Eyes -->
+      <circle cx="165" cy="135" r="10" fill="#000"/>
+      <circle cx="168" cy="132" r="3" fill="#fff"/>
+      <circle cx="215" cy="135" r="10" fill="#000"/>
+      <circle cx="218" cy="132" r="3" fill="#fff"/>
+
+      <!-- Nose -->
+      <ellipse cx="190" cy="155" rx="8" ry="6" fill="#000"/>
+
+      <!-- Mouth -->
+      <path d="M190 158 Q180 168 170 165" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M190 158 Q200 168 210 165" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+      <!-- Blush marks -->
+      <ellipse cx="145" cy="150" rx="15" ry="10" fill="#ffb3c6" opacity="0.6"/>
+      <ellipse cx="235" cy="150" rx="15" ry="10" fill="#ffb3c6" opacity="0.6"/>
     </svg>
 
     <h1>Mirju will you be my valentine?</h1>
@@ -395,194 +418,4 @@
       const interactionOverlay = document.getElementById("interactionOverlay");
       const startBtn = document.getElementById("startBtn");
 
-      /* ---------- MUSIC CONTROL ---------- */
-      const backgroundMusic = document.getElementById('backgroundMusic');
-      const musicToggle = document.getElementById('musicToggle');
-      const musicIcon = document.getElementById('musicIcon');
-      const musicText = document.getElementById('musicText');
-      
-      let isPlaying = false;
-
-      // Set volume to a comfortable level (70%)
-      backgroundMusic.volume = 0.7;
-
-      // Function to start music
-      function startMusic() {
-        backgroundMusic.play().then(() => {
-          isPlaying = true;
-          musicIcon.textContent = '🔊';
-          musicText.textContent = 'Pause Music';
-          musicToggle.classList.add('playing');
-          console.log('Music started successfully');
-        }).catch(err => {
-          console.log('Playback failed:', err);
-        });
-      }
-
-      // Start button click - removes overlay and starts music
-      startBtn.addEventListener('click', () => {
-        interactionOverlay.classList.add('hidden');
-        startMusic();
-      });
-
-      // Also allow clicking anywhere on overlay
-      interactionOverlay.addEventListener('click', (e) => {
-        if (e.target === interactionOverlay) {
-          interactionOverlay.classList.add('hidden');
-          startMusic();
-        }
-      });
-
-      // Music toggle button
-      musicToggle.addEventListener('click', () => {
-        if (isPlaying) {
-          backgroundMusic.pause();
-          isPlaying = false;
-          musicIcon.textContent = '🎵';
-          musicText.textContent = 'Play Music';
-          musicToggle.classList.remove('playing');
-        } else {
-          startMusic();
-        }
-      });
-
-      /* ---------- CONFETTI ---------- */
-      const confettiCanvas = document.getElementById("confettiCanvas");
-
-      function resizeConfettiCanvas() {
-        const dpr = Math.max(1, window.devicePixelRatio || 1);
-        confettiCanvas.width = Math.floor(window.innerWidth * dpr);
-        confettiCanvas.height = Math.floor(window.innerHeight * dpr);
-        confettiCanvas.style.width = "100vw";
-        confettiCanvas.style.height = "100vh";
-      }
-
-      resizeConfettiCanvas();
-      window.addEventListener("resize", resizeConfettiCanvas);
-      window.addEventListener("orientationchange", () => setTimeout(resizeConfettiCanvas, 150));
-
-      const confettiInstance = confetti.create(confettiCanvas, {
-        resize: false,
-        useWorker: true
-      });
-
-      function fullScreenConfetti() {
-        const end = Date.now() + 1600;
-
-        (function frame() {
-          confettiInstance({
-            particleCount: 12,
-            spread: 90,
-            startVelocity: 45,
-            ticks: 180,
-            origin: { x: Math.random(), y: Math.random() * 0.3 }
-          });
-          if (Date.now() < end) requestAnimationFrame(frame);
-        })();
-
-        setTimeout(() => {
-          confettiInstance({
-            particleCount: 300,
-            spread: 140,
-            startVelocity: 60,
-            ticks: 220,
-            origin: { x: 0.5, y: 0.55 }
-          });
-        }, 300);
-      }
-
-      /* ---------- CHILLI RAIN ---------- */
-      function createChilliRain() {
-        const container = document.getElementById('chilliContainer');
-        
-        if (!container) {
-          console.error('Chilli container not found!');
-          return;
-        }
-        
-        const chilliCount = 15;
-        
-        for (let i = 0; i < chilliCount; i++) {
-          const chilli = document.createElement('div');
-          chilli.className = 'chilli';
-          chilli.textContent = '🌶️';
-          
-          // Randomize position and timing
-          chilli.style.left = Math.random() * 100 + 'vw';
-          chilli.style.animationDuration = (8 + Math.random() * 6) + 's';
-          chilli.style.animationDelay = Math.random() * 5 + 's';
-          chilli.style.fontSize = (20 + Math.random() * 15) + 'px';
-          
-          container.appendChild(chilli);
-        }
-        
-        console.log('Chilli rain initialized with', chilliCount, 'chillies');
-      }
-
-      // Initialize chilli rain
-      createChilliRain();
-
-      /* ---------- YES BUTTON GROWS ---------- */
-      let yesScale = 1;
-      function growYes() {
-        yesScale = Math.min(2.2, yesScale + 0.1);
-        yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
-      }
-
-      /* ---------- NO BUTTON RUNS AWAY ---------- */
-      function clamp(n, min, max) {
-        return Math.max(min, Math.min(max, n));
-      }
-
-      function moveNo(px, py) {
-        const z = zone.getBoundingClientRect();
-        const b = noBtn.getBoundingClientRect();
-
-        let dx = (b.left + b.width / 2) - px;
-        let dy = (b.top + b.height / 2) - py;
-        let mag = Math.hypot(dx, dy) || 1;
-        dx /= mag;
-        dy /= mag;
-
-        let newLeft = (b.left - z.left) + dx * 150;
-        let newTop  = (b.top - z.top) + dy * 150;
-
-        newLeft = clamp(newLeft, 0, z.width - b.width);
-        newTop  = clamp(newTop, 0, z.height - b.height);
-
-        noBtn.style.left = newLeft + "px";
-        noBtn.style.top = newTop + "px";
-        noBtn.style.transform = "none";
-
-        growYes();
-      }
-
-      zone.addEventListener("pointermove", e => {
-        const b = noBtn.getBoundingClientRect();
-        const d = Math.hypot(
-          (b.left + b.width / 2) - e.clientX,
-          (b.top + b.height / 2) - e.clientY
-        );
-        if (d < 140) moveNo(e.clientX, e.clientY);
-      });
-
-      noBtn.addEventListener("click", e => e.preventDefault());
-
-      /* ---------- YES CLICK ---------- */
-      yesBtn.addEventListener("click", () => {
-        zone.style.display = "none";
-        hint.style.display = "none";
-        result.style.display = "block";
-        resizeConfettiCanvas();
-        fullScreenConfetti();
-        
-        // Ensure music is playing
-        if (!isPlaying) {
-          startMusic();
-        }
-      });
-      
-    }); // End DOMContentLoaded
-  </script>
-</body>
-</html>
+      /* ---------- MUSIC CONTROL ------
